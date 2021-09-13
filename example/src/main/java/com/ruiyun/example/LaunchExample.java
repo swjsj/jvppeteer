@@ -16,7 +16,7 @@ import com.ruiyun.jvppeteer.options.LaunchOptions;
 import com.ruiyun.jvppeteer.options.LaunchOptionsBuilder;
 
 public class LaunchExample {
-	
+
 	@Test
 	public void test1() throws Exception {
 		//自动下载，第一次下载后不会再下载
@@ -24,9 +24,11 @@ public class LaunchExample {
 		LaunchOptions launchOptions = new LaunchOptionsBuilder().withIgnoreDefaultArgs(Arrays.asList("--enable-automation")).withHeadless(false).build();
 		Browser browser = Puppeteer.launch(launchOptions);
 		Page page = browser.newPage();
-		page.goTo("https://www.baidu.com/?tn=98012088_10_dg&ch=3");
+		page.goTo("https://www.baidu.com/");
 		// 做一些其他操作
-		browser.close();
+//		browser.close();
+
+		Thread.sleep(1000*300);
 	}
 
 	public static void main(String[] args) {
@@ -37,5 +39,5 @@ public class LaunchExample {
 		}
 
 	}
-	
+
 }

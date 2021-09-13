@@ -24,19 +24,35 @@ public class MouseWheelExample {
         arrayList.add("--disable-setuid-sandbox");
         Browser browser = Puppeteer.launch(options);
         Page page = browser.newPage();
-        page.goTo("https://mdn.mozillademos.org/en-US/docs/Web/API/Element/wheel_event$samples/Scaling_an_element_via_the_wheel?revision=1587366");
+        page.goTo("http://news.baidu.com/");
 
-        ElementHandle elem = page.$("div");
+        ElementHandle elem = page.$("html");
         Clip boundingBox = elem.boundingBox();
 
+        double height = boundingBox.getHeight();
+        System.out.println(height);
+
         //鼠标移动到目标
-        page.mouse().move(boundingBox.getX() + boundingBox.getWidth() / 2,
-                boundingBox.getY() + boundingBox.getHeight() / 2);
+        int y = 0;
+        while (y < 5000) {
+            System.out.println(y);
+            page.mouse().wheel(0, y);
+            y += 5;
+        }
 
         //开始鼠标滚动
-        page.mouse().wheel(0.00,-100);
+//        y = 0;
+//        page.mouse().move(0,5000);
+//        while (y < 5000) {
+//            System.out.println(y);
+//
+//            y += 5;
+//        }
+
+        page.mouse().wheel(0, -10000);
+        page.mouse().wheel(0, -10000);
 
         //观察效果
-        Thread.sleep(4000L);
+        Thread.sleep(400000L);
     }
 }

@@ -22,29 +22,47 @@ public class PageScreenshotExample {
 
         ArrayList<String> arrayList = new ArrayList<>();
 
-        LaunchOptions options = new LaunchOptionsBuilder().withArgs(arrayList).withHeadless(true).build();
+        LaunchOptions options = new LaunchOptionsBuilder().withArgs(arrayList).withHeadless(true).withIgnoreHTTPSErrors(true).build();
         arrayList.add("--no-sandbox");
         arrayList.add("--disable-setuid-sandbox");
         Browser browser = Puppeteer.launch(options);
         Page page = browser.newPage();
 //        page.goTo("https://www.baidu.com/?tn=98012088_10_dg&ch=3");
-        page.setDefaultTimeout(1000*6);
-        for (int i = 0; i < 100; i++) {
-            page.goTo("https://www.baidu.com/?tn=98012088_10_dg&ch=3",false);
+        page.setDefaultTimeout(1000 * 6);
+        page.goTo("https://905028523puy.scd.wezhan.cn/", true);
 
-            // 根据dom判断是否加载完
-            WaitForSelectorOptions waitForSelectorOptions = new WaitForSelectorOptions();
-            waitForSelectorOptions.setTimeout(1000*15);
-            waitForSelectorOptions.setVisible(Boolean.TRUE);
-            ElementHandle elementHandle = page.waitForSelector("testdom", waitForSelectorOptions);
+        // 根据dom判断是否加载完
+//            WaitForSelectorOptions waitForSelectorOptions = new WaitForSelectorOptions();
+//            waitForSelectorOptions.setTimeout(1000*15);
+//            waitForSelectorOptions.setVisible(Boolean.FALSE);
 
-            ScreenshotOptions screenshotOptions = new ScreenshotOptions();
-            screenshotOptions.setType("png");
-            screenshotOptions.setFullPage(Boolean.TRUE);
-            String base64Str = page.screenshot(screenshotOptions);
-            System.out.println(i +" ===="+base64Str);
+        ScreenshotOptions screenshotOptions = new ScreenshotOptions();
+        screenshotOptions.setType("png");
+        screenshotOptions.setFullPage(Boolean.TRUE);
+        screenshotOptions.setPath("101.png");
+
+        //鼠标移动到目标
+        int step = 200;
+
+        int y = 0;
+        while (y < 5000) {
+            System.out.println(y);
+            page.mouse().wheel(0, step);
+            y += step;
+        }
+//        page.mouse().move(0,5000);
+        //开始鼠标滚动
+        while (y > 0) {
+            System.out.println(y);
+            page.mouse().wheel(0, -1 * step);
+            y -= step;
         }
 
+        Thread.sleep(1000 * 2);
+        page.screenshot(screenshotOptions);
+//        Thread.sleep(1000 * 2);
 
+        page.close();
+        browser.close();
     }
 }

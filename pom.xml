@@ -10,6 +10,8 @@
     <description>java version of puppeteer</description>
     <url>https://github.com/fanyong920/jvppeteer</url>
     <inceptionYear>2020</inceptionYear>
+
+
     <mailingLists>
         <mailingList>
             <name>fanyong</name>
